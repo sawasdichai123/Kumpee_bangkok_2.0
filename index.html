@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Community Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Prompt', sans-serif; background: #f5f5f5; color: #292D32; }
+        .header { background: #292D32; color: white; padding: 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; }
+        .nav-menu { display: flex; gap: 2rem; align-items: center; list-style: none; }
+        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-weight: 500; }
+        .nav-menu a:hover { color: #FFD700; }
+        .search-box { display: flex; align-items: center; background: #44484F; border-radius: 20px; padding: 0.5rem 1rem; }
+        .search-box input { background: none; border: none; color: white; outline: none; width: 200px; }
+        .auth-buttons { display: flex; gap: 1rem; align-items: center; }
+        .btn { padding: 0.6rem 1.5rem; border-radius: 20px; text-decoration: none; font-weight: 500; transition: all 0.3s; border: none; cursor: pointer; }
+        .btn-login { background: transparent; color: white; border: 2px solid white; }
+        .btn-login:hover { background: white; color: #292D32; }
+        .btn-logout { background: #FF4444; color: white; border: 2px solid #FF4444; padding: 0.5rem 1rem; }
+        .btn-logout:hover { background: #E03030; }
+        .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+        .hamburger span { width: 25px; height: 3px; background: white; border-radius: 2px; }
+        .hero { background: linear-gradient(135deg, #292D32 0%, #44484F 100%); color: white; padding: 3rem 2rem; margin-bottom: 2rem; }
+        .hero-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: center; }
+        .hero-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
+        .badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
+        .badge-new { background: #FF4444; color: white; }
+        .badge-hot { background: #FF6B00; color: white; }
+        .badge-pinned { background: #FFD700; color: #292D32; }
+        .hero-card h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .hero-card p { opacity: 0.9; margin-bottom: 1.5rem; line-height: 1.6; }
+        .hero-actions { display: flex; gap: 1rem; }
+        .btn-primary { background: #FFD700; color: #292D32; }
+        .btn-secondary { background: transparent; color: white; border: 2px solid white; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+        .news-section { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 3px solid #292D32; }
+        .section-header h2 { font-size: 1.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        .section-header .see-all { color: #292D32; text-decoration: none; font-weight: 500; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .news-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .news-image { width: 100%; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; }
+        .news-card:nth-child(2) .news-image { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .news-card:nth-child(3) .news-image { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .news-content { padding: 1.5rem; }
+        .news-meta { display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.85rem; color: #666; }
+        .news-content h3 { font-size: 1.1rem; margin-bottom: 0.8rem; line-height: 1.4; }
+        .news-content p { color: #666; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+        .news-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid #e0e0e0; }
+        .discuss-btn { background: #292D32; color: white; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; text-decoration: none; transition: all 0.3s; display: inline-block; }
+        .discuss-btn:hover { background: #44484F; }
+        .forum-section { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-top: 2rem; }
+        .forum-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0e0; }
+        .tab { padding: 0.8rem 1.5rem; background: none; border: none; cursor: pointer; font-weight: 500; color: #666; transition: all 0.3s; position: relative; }
+        .tab.active { color: #292D32; }
+        .tab.active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: #292D32; }
+        .forum-threads { min-height: 100px; }
+        .forum-thread { padding: 1.5rem; border: 1px solid #e0e0e0; border-radius: 10px; margin-bottom: 1rem; transition: all 0.3s; }
+        .forum-thread:hover { background: #f9f9f9; border-color: #292D32; }
+        .thread-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.8rem; }
+        .thread-title { font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .thread-meta { font-size: 0.85rem; color: #666; }
+        .thread-stats { display: flex; gap: 1.5rem; font-size: 0.85rem; color: #666; }
+        .thread-stat { display: flex; align-items: center; gap: 0.3rem; }
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-widget { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .sidebar-widget h3 { font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 2px solid #292D32; }
+        .poll-option { margin-bottom: 0.8rem; font-size: 0.9rem; }
+        .poll-option label { margin-left: 0.5rem; }
+        .poll-actions { margin-top: 1rem; display: flex; gap: 0.5rem; }
+        .btn-vote { background: #292D32; color: white; padding: 0.6rem 1rem; font-size: 0.9rem; border-radius: 8px; }
+        .btn-results { background: transparent; color: #292D32; padding: 0.6rem 1rem; font-size: 0.9rem; border: 1px solid #292D32; border-radius: 8px; }
+        .tag-cloud { min-height: 50px; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { background: #f0f0f0; padding: 0.4rem 1rem; border-radius: 15px; font-size: 0.85rem; color: #292D32; transition: all 0.3s; text-decoration: none; cursor: pointer; }
+        .tag:hover { background: #292D32; color: white; }
+        .contributor { display: flex; align-items: center; gap: 1rem; padding: 0.8rem; border-radius: 8px; transition: background 0.3s; }
+        .contributor:hover { background: #f5f5f5; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .avatar.avatar-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .avatar.avatar-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .contributor-info { flex: 1; }
+        .contributor-name { font-weight: 600; font-size: 0.9rem; }
+        .contributor-posts { font-size: 0.8rem; color: #666; }
+        .footer { background: #292D32; color: white; padding: 3rem 2rem 1rem; margin-top: 3rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h4 { margin-bottom: 1rem; }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 0.5rem; }
+        .footer-section a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .footer-section a:hover { color: white; text-decoration: underline; }
+        .newsletter-input { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .newsletter-input input { flex: 1; padding: 0.8rem; border: none; border-radius: 8px; outline: none; }
+        .btn-subscribe { background: #FFD700; color: #292D32; padding: 0.8rem 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+        @media (max-width: 968px) { .navbar { padding: 1rem; } .nav-menu { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: #292D32; padding: 1rem; } .hamburger { display: flex; } .hero-content { grid-template-columns: 1fr; } .container { grid-template-columns: 1fr; } .sidebar { order: 2; } main { order: 1; } .news-grid { grid-template-columns: 1fr; } .search-box { display: none; } }
+        @media (max-width: 640px) { .hero-card h2 { font-size: 1.5rem; } .hero-actions { flex-direction: column; } .btn { width: 100%; text-align: center; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">📰💬 NewsHub</a>
+            <ul class="nav-menu">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#news">ข่าวสาร</a></li>
+                <li><a href="#forum">ฟอรั่ม</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" placeholder="ค้นหา...">
+                <span>🔍</span>
+            </div>
+            <div class="auth-buttons" id="auth-container">
+                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home"> 
+        <div class="hero-content">
+            <div class="hero-card">
+                <span class="badge badge-new">NEW</span>
+                <h2>🚀 AI ปฏิวัติวงการเทคโนโลยีในปี 2025</h2>
+                <p>ค้นพบนวัตกรรมใหม่ที่กำลังเปลี่ยนแปลงโลกและมาร่วมพูดคุยแลกเปลี่ยนความคิดเห็นกับชุมชนของเรา</p>
+                <div class="hero-actions">
+                    <a href="cluade-thread.html" class="btn btn-primary">อ่านบทความ</a>
+                    <a href="cluade-thread.html" class="btn btn-secondary">💬 ร่วมพูดคุย</a>
+                </div>
+            </div>
+            <div class="hero-card">
+                <h3 style="margin-bottom: 1rem;">📊 สถิติชุมชน</h3>
+                <div id="community-stats" style="display: grid; gap: 1rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>ข่าวทั้งหมด</span>
+                        <strong id="stats-news-count">1,204</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>กระทู้ทั้งหมด</span>
+                        <strong id="stats-threads-count">8,932</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>ผู้ใช้ออนไลน์</span>
+                        <strong id="stats-online-users">152</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <main>
+            <section class="news-section" id="news">
+                <div class="section-header">
+                    <h2>📰 ข่าวล่าสุด</h2>
+                    <span class="see-all">ดูทั้งหมด →</span>
+                </div>
+                <div class="news-grid" id="news-grid-container">
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-meta"><span>📅 10 พ.ย. 2025</span><span>โดย: Admin</span></div>
+                            <h3>การพัฒนา Web 3.0 ก้าวต่อไปของอินเทอร์เน็ต</h3>
+                            <p>โลกกำลังจับตามองการมาถึงของ Web 3.0 ที่จะมาพร้อมกับความโปร่งใส...</p>
+                            <div class="news-footer"><span class="badge badge-hot">เทคโนโลยี</span><a href="cluade-thread.html" class="discuss-btn">ร่วมพูดคุย</a></div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-meta"><span>📅 9 พ.ย. 2025</span><span>โดย: TechSource</span></div>
+                            <h3>เปิดตัวชิปประมวลผลควอนตัมรุ่นใหม่</h3>
+                            <p>บริษัทเทคยักษ์ใหญ่เผยโฉมชิปควอนตัมที่เร็วที่สุดในโลก...</p>
+                            <div class="news-footer"><span class="badge badge-pinned">นวัตกรรม</span><a href="cluade-thread.html" class="discuss-btn">ร่วมพูดคุย</a></div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-meta"><span>📅 8 พ.ย. 2025</span><span>โดย: BizInsider</span></div>
+                            <h3>ตลาดรถยนต์ไฟฟ้า (EV) เติบโตสวนกระแสเศรษฐกิจ</h3>
+                            <p>ยอดขายรถยนต์ EV ทั่วโลกพุ่งสูงขึ้นอย่างต่อเนื่อง...</p>
+                            <div class="news-footer"><span class="badge" style="background: #4CAF50; color: white;">เศรษฐกิจ</span><a href="cluade-thread.html" class="discuss-btn">ร่วมพูดคุย</a></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="forum-section" id="forum">
+                <div class="section-header">
+                    <h2>💬 ฟอรั่มชุมชน</h2>
+                    <span class="see-all">ไปที่บอร์ดทั้งหมด →</span>
+                </div>
+                <div class="forum-tabs">
+                    <button class="tab active">🔥 กระทู้ยอดนิยม</button>
+                    <button class="tab">🆕 กระทู้ล่าสุด</button>
+                    <button class="tab">📌 ปักหมุด</button>
+                </div>
+                <div class="forum-threads" id="forum-threads-container">
+                    <div class="forum-thread">
+                        <div class="thread-header">
+                            <div>
+                                <h3 class="thread-title"><span class="badge badge-hot">HOT</span> [รีวิว] ชีวิตการทำงานสาย Tech ในต่างประเทศ</h3>
+                                <div class="thread-meta"><span>โดย <strong>DevAbroad</strong> ในหมวด <strong>การทำงาน</strong> • 2 ชั่วโมงที่แล้ว</span></div>
+                            </div>
+                            <div class="thread-stats"><span class="thread-stat">👁️ 10.2k</span><span class="thread-stat">💬 184</span></div>
+                        </div>
+                    </div>
+                    <div class="forum-thread">
+                        <div class="thread-header">
+                            <div>
+                                <h3 class="thread-title"><span class="badge badge-pinned">PINNED</span> [Q&A] ถาม-ตอบ ปัญหาการใช้งาน AWS Lambda และ API Gateway</h3>
+                                <div class="thread-meta"><span>โดย <strong>Admin</strong> ในหมวด <strong>AWS Cloud</strong> • 1 วันที่แล้ว</span></div>
+                            </div>
+                            <div class="thread-stats"><span class="thread-stat">👁️ 5.8k</span><span class="thread-stat">💬 92</span></div>
+                        </div>
+                    </div>
+                    <div class="forum-thread">
+                        <div class="thread-header">
+                            <div>
+                                <h3 class="thread-title">ช่วยแนะนำคอร์สเรียน Python สำหรับ Data Science หน่อยครับ</h3>
+                                <div class="thread-meta"><span>โดย <strong>NewbiePy</strong> ในหมวด <strong>Data Science</strong> • 5 นาทีที่แล้ว</span></div>
+                            </div>
+                            <div class="thread-stats"><span class="thread-stat">👁️ 15</span><span class="thread-stat">💬 2</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3>🏷️ แท็กยอดนิยม</h3>
+                <div class="tag-cloud" id="tag-cloud-container">
+                    <a href="#" class="tag">JavaScript</a><a href="#" class="tag">Python</a><a href="#" class="tag">AWS</a><a href="#" class="tag">React</a><a href="#" class="tag">AI</a><a href="#" class="tag">Machine Learning</a><a href="#" class="tag">Serverless</a><a href="#" class="tag">Docker</a>
+                </div>
+            </div>
+            <div class="sidebar-widget">
+                <h3>👥 สมาชิกยอดนิยม</h3>
+                <div id="contributors-container">
+                    <div class="contributor"><div class="avatar"></div><div class="contributor-info"><div class="contributor-name">Admin</div><div class="contributor-posts">120 โพสต์</div></div></div>
+                    <div class="contributor"><div class="avatar avatar-2"></div><div class="contributor-info"><div class="contributor-name">CloudGuru</div><div class="contributor-posts">95 โพสต์</div></div></div>
+                    <div class="contributor"><div class="avatar avatar-3"></div><div class="contributor-info"><div class="contributor-name">DataSciGal</div><div class="contributor-posts">88 โพสต์</div></div></div>
+                </div>
+            </div>
+            <div class="sidebar-widget">
+                <h3>📊 โพลล์ประจำสัปดาห์</h3>
+                <div id="poll-container">
+                    <p style="font-size: 0.95rem; margin-bottom: 1rem;">คุณใช้ Framework ไหนเป็นหลักในการพัฒนา Frontend?</p>
+                    <div class="poll-option"><input type="radio" name="poll" id="poll-react"> <label for="poll-react">React</label></div>
+                    <div class="poll-option"><input type="radio" name="poll" id="poll-vue"> <label for="poll-vue">Vue</label></div>
+                    <div class="poll-option"><input type="radio" name="poll" id="poll-angular"> <label for="poll-angular">Angular</label></div>
+                    <div class="poll-option"><input type="radio" name="poll" id="poll-other"> <label for="poll-other">อื่นๆ / ไม่ได้ใช้</label></div>
+                    <div class="poll-actions"><button class="btn btn-vote">โหวต</button><button class="btn btn-results">ดูผล</button></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>เกี่ยวกับ NewsHub</h4>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.9rem;">ชุมชนสำหรับนักพัฒนาและผู้สนใจเทคโนโลยี AI, Cloud, และ Web Development เพื่อแบ่งปันความรู้และข่าวสาร</p>
+            </div>
+            <div class="footer-section">
+                <h4>ลิงก์ด่วน</h4>
+                <ul>
+                    <li><a href="#home">หน้าแรก</a></li><li><a href="#news">ข่าวสาร</a></li><li><a href="#forum">ฟอรั่ม</a></li><li><a href="#">เกี่ยวกับเรา</a></li><li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>ติดตามเรา</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li><li><a href="#">Twitter (X)</a></li><li><a href="#">GitHub</a></li><li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>รับข่าวสาร</h4>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">สมัครรับจดหมายข่าวรายสัปดาห์</p>
+                <div class="newsletter-input"><input type="email" placeholder="อีเมลของคุณ"><button class="btn-subscribe">สมัคร</button></div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 NewsHub Community. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        // --- START: NEW AUTH LOGIC (NO AMPLIFY) ---
+
+        // (Mobile Menu, Tabs, Smooth Scroll JS - เหมือนเดิม)
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => {
+            if (navMenu.style.display === 'flex') { navMenu.style.display = 'none'; } else {
+                navMenu.style.display = 'flex'; navMenu.style.flexDirection = 'column'; navMenu.style.position = 'absolute';
+                navMenu.style.top = '60px'; navMenu.style.left = '0'; navMenu.style.right = '0';
+                navMenu.style.background = '#292D32'; navMenu.style.padding = '1rem'; navMenu.style.zIndex = '999';
+            }
+        });
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
+            });
+        });
+
+        
+        /**
+         * Function สำหรับถอดรหัส JWT Token (แบบง่ายๆ) เพื่อเอา email
+         * (Source: https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library)
+         */
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error("Error parsing JWT", e);
+                return null;
+            }
+        }
+
+
+        // ตรวจสอบสถานะ Login เมื่อหน้าโหลด
+        document.addEventListener('DOMContentLoaded', () => {
+            const authContainer = document.getElementById('auth-container');
+            const token = localStorage.getItem('forum_token');
+
+            if (token) {
+                try {
+                    const payload = parseJwt(token);
+                    // ตรวจสอบว่า Token หมดอายุหรือยัง
+                    if (payload.exp * 1000 < Date.now()) {
+                        throw new Error("Token expired");
+                    }
+                    
+                    const email = payload.email;
+                    authContainer.innerHTML = `
+                        <span style="color: white; align-self: center;">สวัสดี, ${email}</span>
+                        <button id="btn-logout" class="btn btn-logout">ออกจากระบบ</button>
+                    `;
+                    
+                    document.getElementById('btn-logout').addEventListener('click', () => {
+                        localStorage.removeItem('forum_token');
+                        alert('ออกจากระบบสำเร็จ!');
+                        window.location.reload(); 
+                    });
+
+                } catch (err) {
+                    console.error('Invalid or expired token:', err);
+                    localStorage.removeItem('forum_token'); // ลบ Token ที่ใช้ไม่ได้
+                    authContainer.innerHTML = '<a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>';
+                }
+            } else {
+                authContainer.innerHTML = '<a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>';
+            }
+        });
+        // --- END: NEW AUTH LOGIC ---
+    </script>
+</body>
+</html>

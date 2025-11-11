@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - NewsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Prompt', sans-serif; background: #f5f5f5; color: #292D32; }
+        .header { background: #292D32; color: white; position: sticky; top: 0; z-index: 1000; }
+        .navbar { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; }
+        .nav-menu { display: flex; gap: 2rem; list-style: none; }
+        .nav-menu a { color: white; text-decoration: none; font-weight: 500; }
+        .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+        .hamburger span { width: 25px; height: 3px; background: white; border-radius: 2px; }
+        .login-container { max-width: 450px; margin: 3rem auto; background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .login-container h1 { text-align: center; margin-bottom: 2rem; color: #292D32; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input { width: 100%; padding: 0.8rem 1rem; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Prompt', sans-serif; font-size: 1rem; }
+        .form-group input:focus { border-color: #292D32; outline: none; box-shadow: 0 0 0 2px rgba(41,45,50,0.1); }
+        .btn { padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s; border: none; cursor: pointer; width: 100%; font-size: 1rem; font-family: 'Prompt', sans-serif; }
+        .btn-primary { background: #292D32; color: white; }
+        .btn-primary:hover { background: #44484F; }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+        .register-link { text-align: center; margin-top: 1.5rem; color: #666; }
+        .register-link a { color: #292D32; font-weight: 600; text-decoration: none; }
+        .register-link a:hover { text-decoration: underline; }
+        @media (max-width: 968px) { .nav-menu { display: none; } .hamburger { display: flex; } }
+        @media (max-width: 600px) { .login-container { margin: 1rem; padding: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">📰💬 NewsHub</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li><a href="index.html#forum">ฟอรั่ม</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </nav>
+    </header>
+
+    <div class="login-container">
+        <h1>เข้าสู่ระบบ</h1>
+        <div class="form-group">
+            <label for="login-email">อีเมล</label>
+            <input type="email" id="login-email" placeholder="youremail@example.com">
+        </div>
+        <div class="form-group">
+            <label for="login-password">รหัสผ่าน</label>
+            <input type="password" id="login-password" placeholder="รหัสผ่านของคุณ">
+        </div>
+        <button id="btn-login" class="btn btn-primary">เข้าสู่ระบบ</button>
+        
+        <div class="register-link">
+            ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a>
+        </div>
+    </div>
+
+    <script>
+        // --- START: NEW AUTH LOGIC (NO AMPLIFY) ---
+        
+        // ⚠️ สำคัญ: แก้ไข URL นี้เป็น Invoke URL ของคุณจาก Phase 5
+        const API_URL = 'https://cy1f0g2gad.execute-api.us-east-1.amazonaws.com/prod';
+
+        const btnLogin = document.getElementById('btn-login');
+
+        // ตรวจสอบว่ามีอีเมลส่งมาจากหน้า Register หรือไม่
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            if (email) {
+                document.getElementById('login-email').value = email;
+            }
+        });
+
+        // Login Function
+        btnLogin.addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            if (!email || !password) {
+                alert('กรุณากรอกอีเมลและรหัสผ่าน'); return;
+            }
+            btnLogin.innerText = 'กำลังเข้าสู่ระบบ...';
+            btnLogin.disabled = true;
+            try {
+                const response = await fetch(API_URL + '/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+
+                if (response.status === 200 && data.token) {
+                    // **สำคัญ: เก็บ Token ไว้ใน localStorage**
+                    localStorage.setItem('forum_token', data.token);
+                    
+                    alert('เข้าสู่ระบบสำเร็จ!');
+                    window.location.href = 'index.html'; 
+                } else {
+                    alert('เข้าสู่ระบบไม่สำเร็จ: ' + data.message);
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อ');
+            } finally {
+                btnLogin.innerText = 'เข้าสู่ระบบ';
+                btnLogin.disabled = false;
+            }
+        });
+
+        // Enter key support
+        document.getElementById('login-password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') { btnLogin.click(); }
+        });
+        // --- END: NEW AUTH LOGIC ---
+    </script>
+</body>
+</html>
