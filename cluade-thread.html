@@ -1,649 +1,516 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>กระทู้: AI ปฏิวัติวงการเทคโนโลยีในปี 2025 - NewsHub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* (CSS ทั้งหมดเหมือนเดิม) */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Prompt', sans-serif; background: #f5f5f5; color: #292D32; }
-        .header { background: #292D32; color: white; padding: 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .navbar { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; }
-        .nav-menu { display: flex; gap: 2rem; align-items: center; list-style: none; }
-        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-weight: 500; }
-        .nav-menu a:hover { color: #FFD700; }
-        .search-box { display: flex; align-items: center; background: #44484F; border-radius: 20px; padding: 0.5rem 1rem; }
-        .search-box input { background: none; border: none; color: white; outline: none; width: 200px; }
-        .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
-        .hamburger span { width: 25px; height: 3px; background: white; border-radius: 2px; }
-        .auth-buttons { display: flex; gap: 1rem; align-items: center; }
-        .btn { padding: 0.6rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s; border: none; cursor: pointer; }
-        .btn-login { background: transparent; color: white; border: 2px solid white; border-radius: 20px; padding: 0.6rem 1.5rem; }
-        .btn-login:hover { background: white; color: #292D32; }
-        .btn-logout { background: #FF4444; color: white; border: 2px solid #FF4444; border-radius: 20px; padding: 0.5rem 1rem; }
-        .btn-logout:hover { background: #E03030; }
-        .breadcrumb { background: white; padding: 1rem 2rem; border-bottom: 1px solid #e0e0e0; }
-        .breadcrumb-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #666; }
-        .breadcrumb a { color: #292D32; text-decoration: none; }
-        .breadcrumb a:hover { color: #FFD700; }
-        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
-        .thread-header { background: white; border-radius: 15px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); min-height: 200px; }
-        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #666; text-decoration: none; margin-bottom: 1rem; font-size: 0.9rem; }
-        .back-link:hover { color: #292D32; }
-        .thread-title { font-size: 2rem; margin-bottom: 1rem; line-height: 1.3; }
-        .thread-meta { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; padding: 1rem 0; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; margin-bottom: 1rem; }
-        .meta-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; color: #666; }
-        .avatar-small { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: inline-block; margin-right: 0.3rem; vertical-align: middle; }
-        .avatar-comment { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .avatar-comment.avatar-2 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
-        .badge-hot { background: #FF6B00; color: white; }
-        .tag { background: #f0f0f0; padding: 0.4rem 1rem; border-radius: 15px; font-size: 0.85rem; text-decoration: none; color: #292D32; }
-        .tag:hover { background: #292D32; color: white; }
-        .thread-actions { display: flex; gap: 1rem; margin-top: 1rem; }
-        .btn-primary { background: #292D32; color: white; }
-        .btn-outline { background: white; color: #292D32; border: 2px solid #292D32; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .article-link { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; text-decoration: none; display: block; transition: all 0.3s; }
-        .article-link:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.15); transform: translateY(-3px); }
-        .article-link-content h3 { margin-bottom: 0.5rem; }
-        .article-link-content p { opacity: 0.9; font-size: 0.9rem; }
-        .comments-section { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .comments-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #292D32; }
-        .sort-options { display: flex; gap: 1rem; }
-        .sort-btn { background: none; border: 1px solid #e0e0e0; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
-        .sort-btn.active { background: #292D32; color: white; border-color: #292D32; }
-        .comment { padding: 1.5rem 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 0; display: flex; gap: 1rem; }
-        .comment:last-child { border-bottom: none; }
-        .comment-content { flex: 1; }
-        .comment-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; font-size: 0.9rem; }
-        .comment-author { font-weight: 600; color: #292D32; }
-        .comment-date { color: #666; }
-        .comment-body { line-height: 1.7; color: #333; }
-        .comment-actions { margin-top: 1rem; display: flex; gap: 1rem; font-size: 0.85rem; }
-        .comment-actions a { color: #666; text-decoration: none; font-weight: 500; }
-        .comment-actions a:hover { color: #292D32; }
-        .reply-form { background: #f9f9f9; padding: 1.5rem; border-radius: 12px; margin-top: 2rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group textarea { width: 100%; padding: 1rem; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Prompt', sans-serif; resize: vertical; min-height: 120px; outline: none; transition: border-color 0.3s; }
-        .form-group textarea:focus { border-color: #292D32; }
-        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; }
-        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-        .sidebar-widget { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .sidebar-widget h3 { font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 2px solid #292D32; }
-        .related-thread { padding: 1rem; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 0.8rem; display: block; color: inherit; text-decoration: none; transition: all 0.3s; }
-        .related-thread:hover { background: #f9f9f9; border-color: #292D32; }
-        .related-thread-title { font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; }
-        .related-thread-stats { font-size: 0.8rem; color: #666; }
-        .stats-box { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .stat-item { text-align: center; padding: 1rem; background: #f9f9f9; border-radius: 8px; }
-        .stat-number { font-size: 1.5rem; font-weight: 700; color: #292D32; margin-bottom: 0.3rem; }
-        .stat-label { font-size: 0.85rem; color: #666; }
-        @media (max-width: 968px) { .container { grid-template-columns: 1fr; } .sidebar { order: 2; } main { order: 1; } .thread-title { font-size: 1.5rem; } .nav-menu { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: #292D32; padding: 1rem; } .hamburger { display: flex; } .search-box { display: none; } }
-        
-        /* ⬇️⬇️⬇️ (CSS สำหรับ "ตอบกลับ") ⬇️⬇️⬇️ */
-        .replies-container {
-            margin-top: 1rem;
-            padding-left: 2rem;
-            border-left: 3px solid #e0e0e0;
-            display: none; /* (สำคัญ) ซ่อนไว้ก่อน */
-        }
-        .reply-comment {
-            display: flex;
-            gap: 0.8rem;
-            padding: 0.8rem;
-            background: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-        }
-        .reply-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #ccc;
-            flex-shrink: 0;
-        }
-        .reply-content {
-            font-size: 0.9rem;
-            width: 100%;
-        }
-        .reply-header {
-            font-weight: 600;
-            color: #333;
-        }
-        .reply-body {
-            color: #555;
-            padding: 0.3rem 0;
-        }
-        .reply-date {
-            font-size: 0.8rem;
-            color: #888;
-        }
-        
-        /* (ฟอร์มตอบกลับเล็ก) */
-        .reply-form-small {
-            display: none; /* ซ่อนไว้ก่อน */
-            gap: 10px;
-            margin-top: 1rem;
-            margin-left: 50px; 
-        }
-        .reply-form-small input {
-            flex-grow: 1;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .reply-form-small button {
-            padding: 0.5rem 0.8rem;
-            font-size: 0.8rem;
-        }
-        
-        /* (ปุ่ม "ดูการตอบกลับ" ใหม่) */
-        .view-replies-btn {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #292D32;
-            text-decoration: none;
-            margin-top: 1rem;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .view-replies-btn:hover {
-            text-decoration: underline;
-        }
-        /* ⬆️⬆️⬆️ (CSS ใหม่) ⬆️⬆️⬆️ */
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>กระทู้: AI ปฏิวัติวงการเทคโนโลยีในปี 2025 - NewsHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Prompt',sans-serif;background:#f5f5f5;color:#292D32}
+    .header{background:#292D32;color:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+    .navbar{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem}
+    .logo{font-size:1.5rem;font-weight:700;color:#fff;text-decoration:none}
+    .nav-menu{display:flex;gap:2rem;align-items:center;list-style:none}
+    .nav-menu a{color:#fff;text-decoration:none;font-weight:500;transition:.3s}
+    .nav-menu a:hover{color:#FFD700}
+    .search-box{display:flex;align-items:center;background:#44484F;border-radius:20px;padding:.5rem 1rem}
+    .search-box input{background:none;border:none;color:#fff;outline:none;width:200px}
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+    .hamburger span{width:25px;height:3px;background:#fff;border-radius:2px}
+    .auth-buttons{display:flex;gap:1rem;align-items:center}
+    .btn{padding:.6rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:500;border:none;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .btn-login{background:transparent;color:#fff;border:2px solid #fff;border-radius:20px}
+    .btn-login:hover{background:#fff;color:#292D32}
+    .btn-logout{background:#FF4444;color:#fff;border:2px solid #FF4444;border-radius:20px}
+    .btn-logout:hover{background:#E03030}
+    .breadcrumb{background:#fff;padding:1rem 2rem;border-bottom:1px solid #e0e0e0}
+    .breadcrumb-content{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:.5rem;font-size:.9rem;color:#666}
+    .breadcrumb a{color:#292D32;text-decoration:none}
+    .breadcrumb a:hover{color:#FFD700}
+    .container{max-width:1400px;margin:2rem auto;padding:0 2rem;display:grid;grid-template-columns:1fr 350px;gap:2rem}
+    .thread-header{background:#fff;border-radius:15px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.05);min-height:200px}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;color:#666;text-decoration:none;margin-bottom:1rem;font-size:.9rem}
+    .back-link:hover{color:#292D32}
+    .thread-title{font-size:2rem;margin-bottom:1rem;line-height:1.3}
+    .thread-meta{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;padding:1rem 0;border-top:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;margin-bottom:1rem}
+    .meta-item{display:flex;align-items:center;gap:.3rem;font-size:.9rem;color:#666}
+    .avatar-small{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);display:inline-block;margin-right:.3rem;vertical-align:middle}
+    .avatar-comment{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+    .avatar-comment.avatar-2{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+    .badge{display:inline-block;padding:.3rem .8rem;border-radius:12px;font-size:.75rem;font-weight:600}
+    .badge-hot{background:#FF6B00;color:#fff}
+    .tag{background:#f0f0f0;padding:.4rem 1rem;border-radius:15px;font-size:.85rem;text-decoration:none;color:#292D32}
+    .tag:hover{background:#292D32;color:#fff}
+    .thread-actions{display:flex;gap:1rem;margin-top:1rem}
+    .btn-primary{background:#292D32;color:#fff}
+    .btn-outline{background:#fff;color:#292D32;border:2px solid #292D32}
+    .article-link{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem;text-decoration:none;display:block;transition:.3s}
+    .article-link:hover{box-shadow:0 8px 20px rgba(0,0,0,.15);transform:translateY(-3px)}
+    .comments-section{background:#fff;border-radius:15px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    .comments-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid #292D32}
+    .sort-options{display:flex;gap:1rem}
+    .sort-btn{background:none;border:1px solid #e0e0e0;padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-size:.85rem}
+    .sort-btn.active{background:#292D32;color:#fff;border-color:#292D32}
+    .comment{padding:1.5rem 0;border-bottom:1px solid #e0e0e0;margin-bottom:0;display:flex;gap:1rem}
+    .comment:last-child{border-bottom:none}
+    .comment-content{flex:1}
+    .comment-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.8rem;font-size:.9rem}
+    .comment-author{font-weight:600;color:#292D32}
+    .comment-date{color:#666}
+    .comment-body{line-height:1.7;color:#333}
+    .comment-actions{margin-top:1rem;display:flex;gap:1rem;font-size:.85rem}
+    .comment-actions a{color:#666;text-decoration:none;font-weight:500}
+    .comment-actions a:hover{color:#292D32}
+    .reply-form{background:#f9f9f9;padding:1.5rem;border-radius:12px;margin-top:2rem}
+    .form-group{margin-bottom:1rem}
+    .form-group textarea{width:100%;padding:1rem;border:1px solid #e0e0e0;border-radius:8px;font-family:'Prompt',sans-serif;resize:vertical;min-height:120px;outline:none;transition:border-color .3s}
+    .form-group textarea:focus{border-color:#292D32}
+    .form-actions{display:flex;gap:1rem;justify-content:flex-end}
+    .sidebar{display:flex;flex-direction:column;gap:1.5rem}
+    .sidebar-widget{background:#fff;padding:1.5rem;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    .sidebar-widget h3{font-size:1.1rem;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:2px solid #292D32}
+    .related-thread{padding:1rem;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:.8rem;display:block;color:inherit;text-decoration:none;transition:.2s}
+    .related-thread:hover{background:#f9f9f9;border-color:#292D32}
+    .related-thread-title{font-weight:500;font-size:.9rem;margin-bottom:.5rem}
+    .related-thread-stats{font-size:.8rem;color:#666}
+    .stats-box{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .stat-item{text-align:center;padding:1rem;background:#f9f9f9;border-radius:8px}
+    .stat-number{font-size:1.5rem;font-weight:700;color:#292D32;margin-bottom:.3rem}
+    .stat-label{font-size:.85rem;color:#666}
+    @media(max-width:968px){
+      .container{grid-template-columns:1fr}
+      .sidebar{order:2} main{order:1}
+      .thread-title{font-size:1.5rem}
+      .nav-menu{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:#292D32;padding:1rem}
+      .hamburger{display:flex}
+      .search-box{display:none}
+    }
+    /* replies */
+    .replies-container{margin-top:1rem;padding-left:2rem;border-left:3px solid #e0e0e0;display:none}
+    .reply-comment{display:flex;gap:.8rem;padding:.8rem;background:#f9f9f9;border-radius:8px;margin-bottom:.5rem}
+    .reply-avatar{width:30px;height:30px;border-radius:50%;background:#ccc;flex-shrink:0}
+    .reply-content{font-size:.9rem;width:100%}
+    .reply-header{font-weight:600;color:#333}
+    .reply-body{color:#555;padding:.3rem 0}
+    .reply-date{font-size:.8rem;color:#888}
+    .reply-form-small{display:none;gap:10px;margin-top:1rem;margin-left:50px}
+    .reply-form-small input{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px}
+    .reply-form-small button{padding:.5rem .8rem;font-size:.8rem}
+    .view-replies-btn{font-size:.85rem;font-weight:600;color:#292D32;text-decoration:none;margin-top:1rem;display:inline-block;cursor:pointer}
+    .view-replies-btn:hover{text-decoration:underline}
+  </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <a href="index.html" class="logo">📰💬 NewsHub</a>
-            <ul class="nav-menu">
-                <li><a href="index.html">หน้าแรก</a></li>
-                <li><a href="index.html#forum">ฟอรั่ม</a></li>
-            </ul>
-            <div class="search-box">
-                <input type="text" placeholder="ค้นหา...">
-                <span>🔍</span>
-            </div>
-            <div class="auth-buttons" id="auth-container">
-                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>
-            </div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+  <header class="header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">📰💬 NewsHub</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="index.html#forum">ฟอรั่ม</a></li>
+      </ul>
+      <div class="search-box">
+        <input type="text" placeholder="ค้นหา..."><span>🔍</span>
+      </div>
+      <div class="auth-buttons" id="auth-container">
+        <a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>
+      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </nav>
+  </header>
 
-    <div class="breadcrumb">
-        <div class="breadcrumb-content" id="breadcrumb-container">
-            <a href="index.html">🏠 หน้าแรก</a>
-            <span>›</span>
-            <a href="index.html#forum">ฟอรั่ม</a>
-            <span>›</span>
-            <a href="#">เทคโนโลยี</a>
-            <span>›</span>
-            <span>AI ปฏิวัติวงการ...</span>
+  <div class="breadcrumb">
+    <div class="breadcrumb-content" id="breadcrumb-container">
+      <a href="index.html">🏠 หน้าแรก</a><span>›</span>
+      <a href="index.html#forum">ฟอรั่ม</a><span>›</span>
+      <a href="#">เทคโนโลยี</a><span>›</span><span>AI ปฏิวัติวงการ...</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <main>
+      <div class="thread-header" id="thread-header-container">
+        <a href="index.html#forum" class="back-link">← กลับไปฟอรั่ม</a>
+        <h1 class="thread-title">🚀 AI ปฏิวัติวงการเทคโนโลยีในปี 2025</h1>
+        <div class="thread-meta">
+          <span class="meta-item"><span class="avatar-small"></span>โพสต์โดย <strong>TechSource</strong></span>
+          <span class="meta-item">📅 10 พ.ย. 2025</span>
+          <span class="meta-item"><span class="badge badge-hot">เทคโนโลยี</span></span>
         </div>
-    </div>
+        <p style="margin-top:1rem;line-height:1.7">บทความนี้วิเคราะห์ถึงแนวโน้มล่าสุดของ AI ... (Mockup)</p>
+        <div class="thread-actions">
+          <a href="#" class="tag">AI</a><a href="#" class="tag">Machine Learning</a><a href="#" class="tag">2025</a>
+        </div>
+      </div>
 
-    <div class="container">
-        <main>
-            <div class="thread-header" id="thread-header-container">
-                <a href="index.html#forum" class="back-link">← กลับไปฟอรั่ม</a>
-                <h1 class="thread-title">🚀 AI ปฏิวัติวงการเทคโนโลยีในปี 2025</h1>
-                <div class="thread-meta">
-                    <span class="meta-item"><span class="avatar-small"></span>โพสต์โดย <strong>TechSource</strong></span>
-                    <span class="meta-item">📅 10 พ.ย. 2025</span>
-                    <span class="meta-item"><span class="badge badge-hot">เทคโนโลยี</span></span>
+      <a href="#" class="article-link" id="article-link-container">
+        <div class="article-link-content">
+          <h3>🔗 อ่านบทความต้นฉบับ</h3>
+          <p>บทความนี้เป็นส่วนหนึ่งของการพูดคุยจาก: "The AI Revolution..." (Mockup)</p>
+        </div>
+      </a>
+
+      <div class="comments-section">
+        <div class="comments-header">
+          <h2 id="comments-title">💬 ความคิดเห็น (3)</h2>
+          <div class="sort-options">
+            <button class="sort-btn active">ล่าสุด</button>
+            <button class="sort-btn">ยอดนิยม</button>
+            <button class="sort-btn">เก่าสุด</button>
+          </div>
+        </div>
+
+        <div id="comments-list-container">
+          <div id="real-posts-container"><p>กำลังโหลดความคิดเห็น...</p></div>
+
+          <!-- MOCKUP STATIC -->
+          <div class="comment">
+            <div class="avatar-comment"></div>
+            <div class="comment-content">
+              <div class="comment-header"><span class="comment-author">CloudGuru</span><span class="comment-date">• (Mockup) 1 ชั่วโมงที่แล้ว</span></div>
+              <div class="comment-body"><p>เห็นด้วยอย่างยิ่งครับ โดยเฉพาะส่วนที่เกี่ยวกับ Serverless AI...</p></div>
+              <div class="comment-actions">
+                <a href="#">👍 5 ถูกใจ</a><a href="#" class="reply-btn-mockup">↪️ ตอบกลับ</a>
+              </div>
+              <div class="replies-container" style="display:block">
+                <div class="reply-comment">
+                  <div class="reply-avatar"></div>
+                  <div class="reply-content">
+                    <span class="reply-header">ReplyBot</span>
+                    <div class="reply-body">This is a mockup reply.</div>
+                  </div>
                 </div>
-                <p style="margin-top: 1rem; line-height: 1.7;">
-                    บทความนี้วิเคราะห์ถึงแนวโน้มล่าสุดของ AI ... (Mockup)
-                </p>
-                <div class="thread-actions">
-                    <a href="#" class="tag">AI</a>
-                    <a href="#" class="tag">Machine Learning</a>
-                    <a href="#" class="tag">2025</a>
-                </div>
+              </div>
             </div>
+          </div>
 
-            <a href="#" class="article-link" id="article-link-container">
-                <div class="article-link-content">
-                    <h3>🔗 อ่านบทความต้นฉบับ</h3>
-                    <p>บทความนี้เป็นส่วนหนึ่งของการพูดคุยจาก: "The AI Revolution..." (Mockup)</p>
-                </div>
-            </a>
-
-            <div class="comments-section">
-                <div class="comments-header">
-                    <h2 id="comments-title">💬 ความคิดเห็น (3)</h2>
-                    <div class="sort-options">
-                        <button class="sort-btn active">ล่าสุด</button>
-                        <button class="sort-btn">ยอดนิยม</button>
-                        <button class="sort-btn">เก่าสุด</button>
-                    </div>
-                </div>
-
-                <div id="comments-list-container">
-                    
-                    <div id="real-posts-container">
-                        <p>กำลังโหลดความคิดเห็น...</p>
-                    </div>
-
-                    <div class="comment">
-                        <div class="avatar-comment"></div>
-                        <div class="comment-content">
-                            <div class="comment-header"><span class="comment-author">CloudGuru</span><span class="comment-date">• (Mockup) 1 ชั่วโมงที่แล้ว</span></div>
-                            <div class="comment-body"><p>เห็นด้วยอย่างยิ่งครับ โดยเฉพาะส่วนที่เกี่ยวกับ Serverless AI...</p></div>
-                            <div class="comment-actions">
-                                <a href="#">👍 5 ถูกใจ</a>
-                                <a href="#" class="reply-btn-mockup">↪️ ตอบกลับ</a>
-                            </div>
-                            <div class="replies-container" style="display: block;"> <div class="reply-comment">
-                                    <div class="reply-avatar"></div>
-                                    <div class="reply-content">
-                                        <span class="reply-header">ReplyBot</span>
-                                        <div class="reply-body">This is a mockup reply.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <div class="avatar-comment avatar-2"></div>
-                        <div class="comment-content">
-                            <div class="comment-header"><span class="comment-author">DevMan</span><span class="comment-date">• (Mockup) 45 นาทีที่แล้ว</span></div>
-                            <div class="comment-body"><p>ผมกังวลเรื่องผลกระทบต่องานของโปรแกรมเมอร์มากกว่าครับ...</p></div>
-                            <div class="comment-actions">
-                                <a href="#">👍 2 ถูกใจ</a>
-                                <a href="#" class="reply-btn-mockup">↪️ ตอบกลับ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="reply-form" id="reply-form-container" style="display: none;"> <h3 style="margin-bottom: 1rem;">✍️ เขียนความคิดเห็น</h3>
-                    <div class="form-group">
-                        <textarea id="reply-textarea" placeholder="แบ่งปันความคิดเห็นของคุณ..."></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-outline">ยกเลิก</button>
-                        <button class="btn btn-primary" id="submit-reply-btn">โพสต์ความคิดเห็น</button>
-                    </div>
-                </div>
-                
-                <div id="login-prompt-container" style="text-align: center; margin-top: 2rem; background: #f9f9f9; padding: 2rem; border-radius: 12px; display: none;"> <h3>กรุณา <a href="login.html" style="color: #292D32;">เข้าสู่ระบบ</a> เพื่อแสดงความคิดเห็น</h3>
-                </div>
+          <div class="comment">
+            <div class="avatar-comment avatar-2"></div>
+            <div class="comment-content">
+              <div class="comment-header"><span class="comment-author">DevMan</span><span class="comment-date">• (Mockup) 45 นาทีที่แล้ว</span></div>
+              <div class="comment-body"><p>ผมกังวลเรื่องผลกระทบต่องานของโปรแกรมเมอร์มากกว่าครับ...</p></div>
+              <div class="comment-actions">
+                <a href="#">👍 2 ถูกใจ</a><a href="#" class="reply-btn-mockup">↪️ ตอบกลับ</a>
+              </div>
             </div>
-        </main>
+          </div>
+          <!-- /MOCKUP STATIC -->
+        </div>
 
-        <aside class="sidebar">
-            <div class="sidebar-widget">
-                <h3>📊 สถิติกระทู้</h3>
-                <div class="stats-box" id="thread-stats-container">
-                    <div class="stat-item"><div class="stat-number" id="stats-replies">2</div><div class="stat-label">ตอบกลับ</div></div>
-                    <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">ผู้ร่วมคุย</div></div>
-                    <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">เข้าชม</div></div>
-                    <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">ถูกใจ</div></div>
+        <div class="reply-form" id="reply-form-container" style="display:none">
+          <h3 style="margin-bottom:1rem">✍️ เขียนความคิดเห็น</h3>
+          <div class="form-group">
+            <textarea id="reply-textarea" placeholder="แบ่งปันความคิดเห็นของคุณ..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-outline" id="cancel-main-post">ยกเลิก</button>
+            <button class="btn btn-primary" id="submit-reply-btn">โพสต์ความคิดเห็น</button>
+          </div>
+        </div>
+
+        <div id="login-prompt-container" style="text-align:center;margin-top:2rem;background:#f9f9f9;padding:2rem;border-radius:12px;display:none">
+          <h3>กรุณา <a href="login.html" style="color:#292D32">เข้าสู่ระบบ</a> เพื่อแสดงความคิดเห็น</h3>
+        </div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-widget">
+        <h3>📊 สถิติกระทู้</h3>
+        <div class="stats-box" id="thread-stats-container">
+          <div class="stat-item"><div class="stat-number" id="stats-replies">2</div><div class="stat-label">ตอบกลับ</div></div>
+          <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">ผู้ร่วมคุย</div></div>
+          <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">เข้าชม</div></div>
+          <div class="stat-item"><div class="stat-number">...</div><div class="stat-label">ถูกใจ</div></div>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>🔥 กระทู้ที่เกี่ยวข้อง</h3>
+        <div id="related-threads-container">
+          <a href="#" class="related-thread"><div class="related-thread-title">การมาของ GPT-5 ... (Mockup)</div></a>
+          <a href="#" class="related-thread"><div class="related-thread-title">เปรียบเทียบ AWS Bedrock ... (Mockup)</div></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script defer>
+    /* ========= CONFIG ========= */
+    // ตั้งให้ตรงกันทุกหน้า (index/login/register)
+    const API_URL = 'https://tae6m8cy06.execute-api.us-east-1.amazonaws.com/prod';
+    const TOKEN_KEY = 'forum_token';
+    const EMAIL_KEY = 'user_email';
+
+    /* ======= Utils ======= */
+    function parseJwt(token){
+      try{
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c=>'%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+        return JSON.parse(jsonPayload);
+      }catch(e){ console.warn('parseJwt error', e); return null; }
+    }
+
+    function getAuthState(){
+      const token = localStorage.getItem(TOKEN_KEY);
+      const emailFromStorage = localStorage.getItem(EMAIL_KEY) || '';
+      if(!token) return {loggedIn:false};
+
+      const payload = parseJwt(token);
+      if (payload?.exp && (payload.exp*1000) < Date.now()){
+        return {loggedIn:false, reason:'expired'};
+      }
+      const email = payload?.email || emailFromStorage || '';
+      return {loggedIn:true, email, token};
+    }
+
+    function renderAuth(){
+      const authC = document.getElementById('auth-container');
+      const replyForm = document.getElementById('reply-form-container');
+      const loginPrompt = document.getElementById('login-prompt-container');
+
+      const state = getAuthState();
+      if(state.loggedIn){
+        authC.innerHTML = `
+          <span style="color:#fff;align-self:center">${state.email || 'ผู้ใช้'}</span>
+          <button id="btn-logout" class="btn btn-logout">ออกจากระบบ</button>
+        `;
+        document.getElementById('btn-logout').onclick=()=>{
+          localStorage.removeItem(TOKEN_KEY);
+          localStorage.removeItem(EMAIL_KEY);
+          location.reload();
+        };
+        replyForm.style.display='block';
+        loginPrompt.style.display='none';
+      }else{
+        authC.innerHTML = '<a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>';
+        replyForm.style.display='none';
+        loginPrompt.style.display='block';
+      }
+    }
+
+    async function unwrapApiJson(response){
+      if(!response.ok){
+        let t=''; try{ t=await response.text(); }catch{}
+        throw new Error(`HTTP ${response.status} ${t}`.trim());
+      }
+      let outer; try{ outer = await response.json(); }catch{ throw new Error('Invalid JSON from API'); }
+
+      if (Array.isArray(outer)) return outer;
+      if (outer && typeof outer==='object' && 'body' in outer){
+        const b = outer.body;
+        if (typeof b==='string' && b.trim()!==''){ try{ return JSON.parse(b); }catch{ return b; } }
+        if (Array.isArray(b)) return b;
+        if (typeof b==='object' && b!==null) return b;
+        return [];
+      }
+      if (Array.isArray(outer?.items)) return outer.items;
+      if (Array.isArray(outer?.data)) return outer.data;
+      if (Array.isArray(outer?.posts)) return outer.posts;
+      return outer;
+    }
+
+    /* ======= API Calls ======= */
+    async function fetchComments(){
+      const realC = document.getElementById('real-posts-container');
+      const commentsTitle = document.getElementById('comments-title');
+      const statsReplies = document.getElementById('stats-replies');
+      const mockupCount = document.querySelectorAll('#comments-list-container > .comment').length;
+
+      realC.innerHTML = '<p>กำลังโหลดความคิดเห็น...</p>';
+
+      try{
+        const resp = await fetch(`${API_URL}/posts`);
+        const data = await unwrapApiJson(resp);
+        const posts = Array.isArray(data) ? data
+                    : Array.isArray(data?.posts) ? data.posts
+                    : Array.isArray(data?.items) ? data.items : [];
+
+        commentsTitle.innerText = `💬 ความคิดเห็น (${posts.length + mockupCount})`;
+        statsReplies.innerText = posts.length + mockupCount;
+        realC.innerHTML = '';
+
+        posts.forEach(post=>{
+          const author = (post.authorEmail || 'anonymous').split('@')[0];
+          const created = post.createdAt ? new Date(post.createdAt) : new Date();
+          const postDate = created.toString()!=='Invalid Date' ? created.toLocaleString('th-TH') : '';
+          const textHtml = (post.commentText || '').toString().replace(/\n/g,'<br>');
+
+          const html = `
+            <div class="comment">
+              <div class="avatar-comment"></div>
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-author">${author}</span>
+                  <span class="comment-date">• ${postDate}</span>
                 </div>
-            </div>
-            <div class="sidebar-widget">
-                <h3>🔥 กระทู้ที่เกี่ยวข้อง</h3>
-                <div id="related-threads-container">
-                    <a href="#" class="related-thread"><div class="related-thread-title">การมาของ GPT-5 ... (Mockup)</div></a>
-                    <a href="#" class="related-thread"><div class="related-thread-title">เปรียบเทียบ AWS Bedrock ... (Mockup)</div></a>
+                <div class="comment-body"><p>${textHtml}</p></div>
+                <div class="comment-actions">
+                  <a href="#">👍 ถูกใจ</a>
+                  <a href="#" class="toggle-reply-form-btn" data-post-id="${post.postId}">↪️ ตอบกลับ</a>
                 </div>
-            </div>
-        </aside>
-    </div>
-
-    <script>
-        // --- START: NEW AUTH LOGIC (NO AMPLIFY) ---
-
-        // ⚠️ สำคัญ: แก้ไข URL นี้เป็น Invoke URL ของคุณจาก Phase 5
-        // ⚠️ ตัวอย่าง: const API_URL = 'https://cy1f0g2gad.execute-api.us-east-1.amazonaws.com/prod';
-        const API_URL = 'https://cy1f0g2gad.execute-api.us-east-1.amazonaws.com/prod'; // (ผมใช้ URL ของคุณจากในรูป)
-
-        // (Mobile Menu JS - เหมือนเดิม)
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        hamburger.addEventListener('click', () => {
-            if (navMenu.style.display === 'flex') { navMenu.style.display = 'none'; } else {
-                navMenu.style.display = 'flex'; navMenu.style.flexDirection = 'column'; navMenu.style.position = 'absolute';
-                navMenu.style.top = '60px'; navMenu.style.left = '0'; navMenu.style.right = '0';
-                navMenu.style.background = '#292D32'; navMenu.style.padding = '1rem'; navMenu.style.zIndex = '999';
-            }
+                <a href="#" class="view-replies-btn" data-post-id="${post.postId}">ดูการตอบกลับ</a>
+                <div class="replies-container" id="replies-for-${post.postId}"></div>
+                <div class="reply-form-small" id="reply-form-for-${post.postId}">
+                  <input type="text" id="reply-input-${post.postId}" placeholder="เขียนตอบกลับ...">
+                  <button class="post-reply-btn" data-post-id="${post.postId}">ส่ง</button>
+                </div>
+              </div>
+            </div>`;
+          realC.insertAdjacentHTML('beforeend', html);
         });
 
-        /**
-         * Function สำหรับถอดรหัส JWT Token (แบบง่ายๆ) เพื่อเอา email
-         */
-        function parseJwt(token) {
-            try {
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            } catch (e) {
-                console.error("Error parsing JWT", e);
-                return null;
-            }
+      }catch(err){
+        console.error('Fetch comments error:', err);
+        realC.innerHTML = `<p style="color:red">เกิดข้อผิดพลาดในการโหลดความคิดเห็น: ${err.message}</p>`;
+      }
+    }
+
+    async function fetchReplies(postId){
+      const c = document.getElementById(`replies-for-${postId}`);
+      if(!c) return;
+      c.style.display='block';
+      c.innerHTML = '<small>กำลังโหลดการตอบกลับ...</small>';
+      try{
+        const resp = await fetch(`${API_URL}/comments?postId=${encodeURIComponent(postId)}`);
+        const data = await unwrapApiJson(resp);
+        const replies = Array.isArray(data) ? data
+                      : Array.isArray(data?.items) ? data.items
+                      : Array.isArray(data?.comments) ? data.comments : [];
+        c.innerHTML = '';
+        if(replies.length===0){ c.innerHTML = '<small>ยังไม่มีการตอบกลับ</small>'; return; }
+
+        replies.forEach(r=>{
+          const author = (r.authorEmail || 'anonymous').split('@')[0];
+          const created = r.createdAt ? new Date(r.createdAt) : new Date();
+          const d = created.toString()!=='Invalid Date' ? created.toLocaleString('th-TH') : '';
+          c.insertAdjacentHTML('beforeend', `
+            <div class="reply-comment">
+              <div class="reply-avatar"></div>
+              <div class="reply-content">
+                <span class="reply-header">${author}</span>
+                <div class="reply-body">${(r.commentText||'').toString()}</div>
+                <div class="reply-date">${d}</div>
+              </div>
+            </div>`);
+        });
+      }catch(err){
+        console.error('Error fetching replies:', err);
+        c.innerHTML = `<small style="color:red">Error loading replies: ${err.message}</small>`;
+      }
+    }
+
+    async function postReply(postId, commentText){
+      const state = getAuthState();
+      if(!state.loggedIn){ alert('กรุณาเข้าสู่ระบบก่อน'); return; }
+      const btn = document.querySelector(`.post-reply-btn[data-post-id="${postId}"]`);
+      if(btn) btn.disabled = true;
+      try{
+        const resp = await fetch(`${API_URL}/comments`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.token},
+          body:JSON.stringify({postId, commentText})
+        });
+        if(!resp.ok){
+          let msg=''; try{ msg=(await resp.json()).message; }catch{}
+          throw new Error(msg || `HTTP ${resp.status}`);
         }
-        
-        // ⬇️⬇️⬇️ (แก้ไข) ฟังก์ชันสำหรับ "อ่าน" ข้อมูล (GET) ⬇️⬇️⬇️
-        
-        /**
-         * ดึงข้อมูล Comments (Posts) ทั้งหมดจาก API
-         */
-        async function fetchComments() {
-            const realPostsContainer = document.getElementById('real-posts-container');
-            const commentsTitle = document.getElementById('comments-title');
-            const statsReplies = document.getElementById('stats-replies');
-            
-            const mockupCount = document.querySelectorAll('#comments-list-container > .comment').length; 
-            
-            realPostsContainer.innerHTML = '<p>กำลังโหลดความคิดเห็น...</p>';
+        document.getElementById(`reply-input-${postId}`).value='';
+        document.getElementById(`reply-form-for-${postId}`).style.display='flex';
+        await fetchReplies(postId);
+      }catch(err){
+        console.error('Error posting reply:', err);
+        alert('โพสต์ตอบกลับไม่สำเร็จ: ' + err.message);
+      }finally{ if(btn) btn.disabled=false; }
+    }
 
-            try {
-                const response = await fetch(API_URL + '/posts', {
-                    method: 'GET'
-                });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const posts = await response.json(); 
-
-                commentsTitle.innerText = `💬 ความคิดเห็น (${posts.length + mockupCount})`;
-                statsReplies.innerText = posts.length + mockupCount;
-                realPostsContainer.innerHTML = ''; 
-
-                if (posts.length === 0) {
-                    realPostsContainer.innerHTML = '';
-                }
-
-                posts.forEach(post => {
-                    const postDate = new Date(post.createdAt).toLocaleString('th-TH');
-                    
-                    const postHTML = `
-                        <div class="comment">
-                            <div class="avatar-comment"></div>
-                            <div class="comment-content">
-                                <div class="comment-header">
-                                    <span class="comment-author">${post.authorEmail.split('@')[0]}</span>
-                                    <span class="comment-date">• ${postDate}</span>
-                                </div>
-                                <div class="comment-body">
-                                    <p>${post.commentText.replace(/\n/g, '<br>')}</p>
-                                </div>
-                                <div class="comment-actions">
-                                    <a href="#">👍 ถูกใจ</a>
-                                    <a href="#" class="toggle-reply-form-btn" data-post-id="${post.postId}">↪️ ตอบกลับ</a>
-                                </div>
-                                
-                                <a href="#" class="view-replies-btn" data-post-id="${post.postId}">ดูการตอบกลับ</a>
-
-                                <div class="replies-container" id="replies-for-${post.postId}">
-                                    </div>
-                                <div class="reply-form-small" id="reply-form-for-${post.postId}">
-                                    <input type="text" id="reply-input-${post.postId}" placeholder="เขียนตอบกลับ...">
-                                    <button class="post-reply-btn" data-post-id="${post.postId}">ส่ง</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    realPostsContainer.innerHTML += postHTML;
-                    
-                    // ‼️ (ลบ) เราจะไม่เรียก fetchReplies() ตรงนี้แล้ว ‼️
-                });
-
-            } catch (error) {
-                console.error('Fetch comments error:', error);
-                realPostsContainer.innerHTML = '<p style="color: red;">เกิดข้อผิดพลาดในการโหลดความคิดเห็น</p>';
-            }
+    /* ======= UI & Events ======= */
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      // mobile menu
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      hamburger.addEventListener('click',()=>{
+        if (navMenu.style.display==='flex'){ navMenu.style.display='none'; }
+        else{
+          navMenu.style.display='flex';
+          navMenu.style.flexDirection='column';
+          navMenu.style.position='absolute';
+          navMenu.style.top='60px'; navMenu.style.left='0'; navMenu.style.right='0';
+          navMenu.style.background='#292D32'; navMenu.style.padding='1rem'; navMenu.style.zIndex='999';
         }
+      });
 
-        /**
-         * (ฟังก์ชันใหม่) ดึงข้อมูล Replies (Comments) ของ Post ID ที่กำหนด
-         */
-        async function fetchReplies(postId) {
-            const repliesContainer = document.getElementById(`replies-for-${postId}`);
-            if (!repliesContainer) return;
-            
-            // (ใหม่) แสดง container และข้อความ "กำลังโหลด..."
-            repliesContainer.style.display = 'block';
-            repliesContainer.innerHTML = '<small>กำลังโหลดการตอบกลับ...</small>';
-            
-            try {
-                const response = await fetch(`${API_URL}/comments?postId=${postId}`, {
-                    method: 'GET'
-                });
-                if (!response.ok) throw new Error('Failed to fetch replies');
-                
-                const replies = await response.json();
-                repliesContainer.innerHTML = ''; // ล้าง "กำลังโหลด..."
-                
-                if (replies.length === 0) {
-                    repliesContainer.innerHTML = '<small>ยังไม่มีการตอบกลับ</small>';
-                    return; 
-                }
+      renderAuth();
+      await fetchComments();
 
-                replies.forEach(reply => {
-                    const replyDate = new Date(reply.createdAt).toLocaleString('th-TH');
-                    const replyHTML = `
-                        <div class="reply-comment">
-                            <div class="reply-avatar"></div>
-                            <div class="reply-content">
-                                <span class="reply-header">${reply.authorEmail.split('@')[0]}</span>
-                                <div class="reply-body">${reply.commentText}</div>
-                                <div class="reply-date">${replyDate}</div>
-                            </div>
-                        </div>
-                    `;
-                    repliesContainer.innerHTML += replyHTML;
-                });
-                
-            } catch (error) {
-                console.error(`Error fetching replies for ${postId}:`, error);
-                repliesContainer.innerHTML = '<small style="color: red;">Error loading replies.</small>';
-            }
-        }
-        
-        /**
-         * (ฟังก์ชันใหม่) โพสต์ Reply (Comment)
-         */
-        async function postReply(postId, commentText) {
-            const currentToken = localStorage.getItem('forum_token');
-            if (!currentToken) {
-                alert('กรุณาเข้าสู่ระบบก่อน'); return;
-            }
-            
-            const postReplyBtn = document.querySelector(`.post-reply-btn[data-post-id="${postId}"]`);
-            if(postReplyBtn) postReplyBtn.disabled = true;
+      // main post
+      const postBtn = document.getElementById('submit-reply-btn');
+      const cancelBtn = document.getElementById('cancel-main-post');
+      const textarea = document.getElementById('reply-textarea');
 
-            try {
-                const response = await fetch(`${API_URL}/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + currentToken
-                    },
-                    body: JSON.stringify({
-                        postId: postId,       // ID ของโพสต์หลัก
-                        commentText: commentText  // เนื้อหา Reply
-                    })
-                });
-                if (!response.ok) {
-                    const data = await response.json();
-                    throw new Error(data.message);
-                }
-                
-                document.getElementById(`reply-input-${postId}`).value = ''; // เคลียร์ช่อง
-                document.getElementById(`reply-form-for-${postId}`).style.display = 'flex'; // (มั่นใจว่าฟอร์มยังเปิดอยู่)
-                
-                await fetchReplies(postId); // โหลดซ้ำ
-                
-            } catch (error) {
-                console.error('Error posting reply:', error);
-                alert('โพสต์ตอบกลับไม่สำเร็จ: ' + error.message);
-            } finally {
-                if(postReplyBtn) postReplyBtn.disabled = false;
-            }
-        }
-        
-        // ⬆️⬆️⬆️ จบฟังก์ชันที่แก้ไข/เพิ่มใหม่ ⬆️⬆️⬆️
+      cancelBtn.onclick = ()=> textarea.value='';
 
+      if(postBtn){
+        postBtn.addEventListener('click', async ()=>{
+          const state = getAuthState();
+          if(!state.loggedIn){ alert('กรุณาเข้าสู่ระบบก่อนโพสต์'); location.href='login.html'; return; }
+          if ((textarea.value||'').trim()===''){ alert('กรุณาพิมพ์ข้อความ'); return; }
 
-        // --- START: AUTH LOGIC & POSTING LOGIC (แก้ไข) ---
-        document.addEventListener('DOMContentLoaded', async () => {
-            const authContainer = document.getElementById('auth-container');
-            const replyForm = document.getElementById('reply-form-container'); // (ฟอร์มใหญ่)
-            const loginPrompt = document.getElementById('login-prompt-container');
-            
-            const userToken = localStorage.getItem('forum_token');
-
-            if (userToken) {
-                try {
-                    const payload = parseJwt(userToken);
-                    if (payload.exp * 1000 < Date.now()) {
-                        throw new Error("Token expired");
-                    }
-                    
-                    const email = payload.email;
-                    authContainer.innerHTML = `
-                        <span style="color: white; align-self: center;">${email}</span>
-                        <button id="btn-logout" class="btn btn-logout">ออกจากระบบ</button>
-                    `;
-                    
-                    document.getElementById('btn-logout').addEventListener('click', () => {
-                        localStorage.removeItem('forum_token');
-                        window.location.reload(); 
-                    });
-
-                    replyForm.style.display = 'block';
-                    loginPrompt.style.display = 'none';
-
-                } catch (err) {
-                    console.log('Invalid or expired token:', err);
-                    localStorage.removeItem('forum_token');
-                    authContainer.innerHTML = '<a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>';
-                    replyForm.style.display = 'none';
-                    loginPrompt.style.display = 'block';
-                }
-            } else {
-                console.log('Not logged in');
-                authContainer.innerHTML = '<a href="login.html" class="btn btn-login">เข้าสู่ระบบ / สมัครสมาชิก</a>';
-                replyForm.style.display = 'none';
-                loginPrompt.style.display = 'block';
-            }
-            
-            // (1) สั่งให้ดึง "โพสต์หลัก" มาแสดง (เหมือนเดิม)
-            await fetchComments(); 
-
-
-            // (2) เชื่อมต่อปุ่มโพสต์ "ความคิดเห็นหลัก" (เหมือนเดิม)
-            const postButton = document.getElementById('submit-reply-btn');
-            const commentTextarea = document.getElementById('reply-textarea');
-
-            if (postButton) {
-                postButton.addEventListener('click', async () => {
-                    const currentToken = localStorage.getItem('forum_token'); 
-                    if (!currentToken) { /* ... (โค้ดเช็ก Token เหมือนเดิม) ... */ return; }
-                    
-                    try { /* ... (โค้ดเช็ก Token หมดอายุ เหมือนเดิม) ... */ } catch (e) { /* ... */ return; }
-
-                    const commentBody = commentTextarea.value;
-                    if (commentBody.trim() === '') { alert('กรุณาพิมพ์ข้อความ'); return; }
-
-                    postButton.innerText = 'กำลังโพสต์...';
-                    postButton.disabled = true;
-
-                    try {
-                        const response = await fetch(API_URL + '/posts', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + currentToken
-                            },
-                            body: JSON.stringify({
-                                commentText: commentBody 
-                            })
-                        });
-                        
-                        const data = await response.json();
-                        if (response.status === 201) {
-                            alert('โพสต์ความคิดเห็นสำเร็จ!');
-                            commentTextarea.value = '';
-                            await fetchComments(); // อัปเดตลิสต์โพสต์หลัก
-                        } else {
-                            alert('โพสต์ไม่สำเร็จ: ' + data.message);
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('เกิดข้อผิดพลาดในการเชื่อมต่อ (โปรดตรวจสอบ Console)');
-                    } finally {
-                        postButton.innerText = 'โพสต์ความคิดเห็น';
-                        postButton.disabled = false;
-                    }
-                });
-            }
-            
-            // ⬇️⬇️⬇️ (3) (แก้ไข) Event Listener สำหรับปุ่ม "ตอบกลับ" ⬇️⬇️⬇️
-            const commentsListContainer = document.getElementById('comments-list-container');
-            
-            commentsListContainer.addEventListener('click', (event) => {
-                const target = event.target;
-                
-                // --- A. ถ้าคลิกปุ่ม "↪️ ตอบกลับ" ---
-                if (target.classList.contains('toggle-reply-form-btn')) {
-                    event.preventDefault(); // กันลิงก์ # ทำหน้าเด้ง
-                    if (!localStorage.getItem('forum_token')) {
-                         alert('กรุณาเข้าสู่ระบบก่อนตอบกลับ'); return;
-                    }
-                    const postId = target.dataset.postId;
-                    const form = document.getElementById(`reply-form-for-${postId}`);
-                    // สลับการแสดงฟอร์ม
-                    form.style.display = (form.style.display === 'flex') ? 'none' : 'flex';
-                }
-                
-                // --- B. (ใหม่) ถ้าคลิกปุ่ม "ดูการตอบกลับ" ---
-                if (target.classList.contains('view-replies-btn')) {
-                    event.preventDefault();
-                    const postId = target.dataset.postId;
-                    const replies = document.getElementById(`replies-for-${postId}`);
-
-                    // เช็กว่าเคยโหลด replies หรือยัง (กันการโหลดซ้ำ)
-                    if (replies.dataset.loaded !== 'true') {
-                        fetchReplies(postId); // <--- เรียก fetchReplies() ที่นี่
-                        replies.dataset.loaded = 'true'; // ตั้งค่าว่าโหลดแล้ว
-                    } else {
-                        // ถ้าโหลดแล้ว ก็แค่สลับการแสดงผล
-                        replies.style.display = (replies.style.display === 'block') ? 'none' : 'block';
-                    }
-                }
-                
-                // --- C. ถ้าคลิกปุ่ม "ส่ง" (ปุ่มเล็กๆ ในฟอร์ม Reply) ---
-                if (target.classList.contains('post-reply-btn')) {
-                    event.preventDefault();
-                    const postId = target.dataset.postId;
-                    const inputElement = document.getElementById(`reply-input-${postId}`);
-                    const commentText = inputElement.value;
-                    
-                    if (commentText.trim()) {
-                        postReply(postId, commentText); // เรียกฟังก์ชันใหม่
-                    } else {
-                        alert('กรุณาพิมพ์ข้อความตอบกลับ');
-                    }
-                }
+          postBtn.innerText='กำลังโพสต์...'; postBtn.disabled=true;
+          try{
+            const resp = await fetch(`${API_URL}/posts`,{
+              method:'POST',
+              headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.token},
+              body:JSON.stringify({ commentText: textarea.value })
             });
-            
+            if(!resp.ok){
+              let msg=''; try{ msg=(await resp.json()).message; }catch{}
+              throw new Error(msg || `HTTP ${resp.status}`);
+            }
+            alert('โพสต์ความคิดเห็นสำเร็จ!');
+            textarea.value='';
+            await fetchComments();
+          }catch(err){
+            console.error(err);
+            alert('โพสต์ไม่สำเร็จ: '+err.message);
+          }finally{
+            postBtn.innerText='โพสต์ความคิดเห็น'; postBtn.disabled=false;
+          }
         });
-        // --- END: NEW AUTH LOGIC ---
-    </script>
+      }
+
+      // delegation
+      const list = document.getElementById('comments-list-container');
+      list.addEventListener('click', (e)=>{
+        const t = e.target;
+
+        if (t.classList.contains('toggle-reply-form-btn')){
+          e.preventDefault();
+          const state = getAuthState(); if(!state.loggedIn){ alert('กรุณาเข้าสู่ระบบก่อนตอบกลับ'); return; }
+          const id = t.dataset.postId;
+          const form = document.getElementById(`reply-form-for-${id}`);
+          form.style.display = (form.style.display==='flex') ? 'none' : 'flex';
+        }
+
+        if (t.classList.contains('view-replies-btn')){
+          e.preventDefault();
+          const id = t.dataset.postId;
+          const box = document.getElementById(`replies-for-${id}`);
+          if (box.dataset.loaded!=='true'){ fetchReplies(id); box.dataset.loaded='true'; box.style.display='block'; }
+          else{ box.style.display = (box.style.display==='block') ? 'none' : 'block'; }
+        }
+
+        if (t.classList.contains('post-reply-btn')){
+          e.preventDefault();
+          const id = t.dataset.postId;
+          const input = document.getElementById(`reply-input-${id}`);
+          const text = input.value;
+          if ((text||'').trim()) postReply(id,text);
+          else alert('กรุณาพิมพ์ข้อความตอบกลับ');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
